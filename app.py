@@ -412,6 +412,34 @@ div[data-baseweb="input"] button {
 </style>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+<style>
+
+/* Section headings */
+.section-heading {
+    color: #174D38 !important;
+    font-size: 23px !important;
+    font-weight: 800 !important;
+    margin-bottom: 22px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #E5EDE7;
+    letter-spacing: 0.3px;
+}
+
+/* Remove unwanted heading anchor icons */
+.section-heading a {
+    display: none !important;
+}
+
+/* Improve input labels */
+.stNumberInput label {
+    color: #263D32 !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 # ==========================================================
 # 4. NAVIGATION BAR
@@ -499,18 +527,47 @@ st.write("")
 # ==========================================================
 
 st.html("""
+<style>
+
+.section-header {
+    background: linear-gradient(135deg, #FFFFFF, #F5F9F6);
+    padding: 25px 30px;
+    border: 1px solid #DCE8DF;
+    border-left: 6px solid #216747;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 14px rgba(25, 75, 50, 0.06);
+}
+
+.section-header h2 {
+    color: #174D38 !important;
+    font-size: 25px !important;
+    font-weight: 800 !important;
+    margin: 0 0 10px 0 !important;
+    letter-spacing: 0.3px;
+}
+
+.section-header p {
+    color: #64756A !important;
+    font-size: 14px !important;
+    margin: 0 !important;
+    line-height: 1.6;
+}
+
+</style>
+
 <div class="section-header">
 
     <h2>🏠 Property Details</h2>
 
     <p>
         Complete the information below to calculate
-        the estimated value of your property.
+        the estimated value of your property using
+        our Artificial Neural Network.
     </p>
 
 </div>
 """)
-
 
 # ==========================================================
 # 8. PROPERTY INPUT FORM
@@ -518,15 +575,37 @@ st.html("""
 
 if artifacts_loaded:
 
+    # Custom styling for input section headings
+    st.markdown("""
+    <style>
+
+    .section-heading {
+        color: #174D38 !important;
+        font-size: 21px !important;
+        font-weight: 800 !important;
+        padding-bottom: 12px;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #DCE9DF;
+        letter-spacing: 0.3px;
+    }
+
+    </style>
+    """, unsafe_allow_html=True)
+
     with st.form("property_prediction_form"):
 
         col1, col2 = st.columns(2, gap="large")
 
-        # LEFT SIDE
+        # ==============================================
+        # LEFT SIDE - LOCATION & INCOME
+        # ==============================================
 
         with col1:
 
-            st.markdown("#### 📍 Location & Income")
+            st.markdown(
+                '<div class="section-heading">📍 Location & Income</div>',
+                unsafe_allow_html=True
+            )
 
             MedInc = st.number_input(
                 "Median Income",
@@ -566,16 +645,21 @@ if artifacts_loaded:
                 help="Geographical longitude of the property area in California."
             )
 
-        # RIGHT SIDE
+        # ==============================================
+        # RIGHT SIDE - PROPERTY CHARACTERISTICS
+        # ==============================================
 
         with col2:
 
-            st.markdown("#### 🏡 Property Characteristics")
+            st.markdown(
+                '<div class="section-heading">🏡 Property Characteristics</div>',
+                unsafe_allow_html=True
+            )
 
             AveRooms = st.number_input(
                 "Average Rooms",
-                min_value=1.0,
-                max_value=50.0,
+                min_value=0.0,
+                max_value=100.0,
                 value=5.0,
                 step=0.1,
                 help="Average number of rooms per household."
@@ -583,8 +667,8 @@ if artifacts_loaded:
 
             AveBedrms = st.number_input(
                 "Average Bedrooms",
-                min_value=0.1,
-                max_value=20.0,
+                min_value=0.0,
+                max_value=25.0,
                 value=1.0,
                 step=0.1,
                 help="Average number of bedrooms per household."
@@ -596,22 +680,27 @@ if artifacts_loaded:
                 max_value=50000.0,
                 value=1000.0,
                 step=100.0,
-                help="Total population of the block group."
+                help="Total population of the area."
             )
 
             AveOccup = st.number_input(
                 "Average Occupancy",
-                min_value=0.1,
-                max_value=100.0,
+                min_value=0.0,
+                max_value=20.0,
                 value=3.0,
                 step=0.1,
-                help="Average number of household members."
+                help="Average number of occupants per household."
             )
 
-        st.write("")
+        # ==============================================
+        # PREDICTION BUTTON
+        # ==============================================
+
+        st.markdown("<br>", unsafe_allow_html=True)
 
         submitted = st.form_submit_button(
-            "✦  GENERATE HOUSE PRICE PREDICTION"
+            "✦ GENERATE HOUSE PRICE PREDICTION",
+            use_container_width=False
         )
 
 
