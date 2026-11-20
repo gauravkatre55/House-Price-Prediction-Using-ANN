@@ -17,7 +17,7 @@ that predicts house prices using a trained Artificial Neural Network.
 
 ### House Price Prediction Application
 
-![House Price Prediction Application](screenshot/house-price-prediction-app.png)
+![House Price Prediction Application](Screenshot/house-price-prediction-app.png)
 
 ## 🎯 Project Objectives
 
